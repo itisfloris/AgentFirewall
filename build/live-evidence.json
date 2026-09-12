@@ -1,0 +1,84 @@
+{
+  "version": "AgentFirewall.LiveEvidence.v1",
+  "generatedAt": "2026-09-11T23:25:14.292Z",
+  "claim": "A successful Sepolia authorization receipt was proven through Creditcoin and semantically ingested; an executable mutation was BLOCKED while the authorized canonical execution commitment was ALLOWED.",
+  "build": {
+    "sourceId": "sha256:fc2d35ebe3830225ade37210ae7dd29b26e3e9618371cc99e94db1af6ee7144b",
+    "sourceKind": "standalone-sha256"
+  },
+  "transactions": {
+    "sourceAuthorization": "0xb128ed2d774c524d563d43df63349fd8ea6c39742a36a7f9a24d1d8309dab6aa",
+    "creditcoinIngest": "0x220f64a587451af1c425be74e644366b7784b9c26a7589cbfa412e4e69528062",
+    "execution": "0x16096b8bd03603994630c04afe09c1c25d2382e30338058c35d2f1333eb3feb7"
+  },
+  "controllerApproval": {
+    "controller": "0x4b79bD0B1Be2d9a68E5355e637fb74b84619D2F6",
+    "executor": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+    "authoritySeparated": true
+  },
+  "authorization": {
+    "authorizationId": "0x8207ab0bfc3ff5b171ee3b0cae22db4b42ac7019f3b6f0a2ad115cadb7b7d266",
+    "commitment": "0x649bd99b63ec7d63da060d0e1088942e432f588569c23f8ae56f4761301fa35c"
+  },
+  "source": {
+    "network": "sepolia",
+    "chainId": "11155111",
+    "authorizationSource": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "transactionHash": "0xb128ed2d774c524d563d43df63349fd8ea6c39742a36a7f9a24d1d8309dab6aa",
+    "blockNumber": "11685069",
+    "transactionIndex": "63",
+    "explorerTransaction": "https://sepolia.etherscan.io/tx/0xb128ed2d774c524d563d43df63349fd8ea6c39742a36a7f9a24d1d8309dab6aa",
+    "explorerContract": "https://sepolia.etherscan.io/address/0x73fC164a9e7e7e3860E509e80B6A6ba838001275"
+  },
+  "creditcoin": {
+    "network": "creditcoin-testnet",
+    "registryAddress": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "transactionHash": "0x220f64a587451af1c425be74e644366b7784b9c26a7589cbfa412e4e69528062",
+    "blockNumber": "5471872",
+    "sourceChainKey": "1",
+    "sourceBlockNumber": "11685069",
+    "transactionIndex": "63",
+    "transactionKey": "0xdb2a12a44bfd6b5f9d68833d10727ab900fbef60bff6dd84bcd42621c9721c64",
+    "provenTransactionHash": "0x6a449b47ae6330b221f331f301059b42296c019ce66fa252f42c43d440ab0024",
+    "proofPreflightVerified": true,
+    "explorerTransaction": "https://creditcoin-testnet.blockscout.com/tx/0x220f64a587451af1c425be74e644366b7784b9c26a7589cbfa412e4e69528062",
+    "explorerContract": "https://creditcoin-testnet.blockscout.com/address/0x73fC164a9e7e7e3860E509e80B6A6ba838001275"
+  },
+  "firewall": {
+    "mutatedExecutablePayload": {
+      "simulation": "SUCCESS",
+      "decision": "BLOCK",
+      "criticalFindingCodes": [
+        "VERIFIED_ACTUAL_COMMITMENT_MISMATCH",
+        "TARGET_MISMATCH",
+        "RECIPIENT_MISMATCH"
+      ]
+    },
+    "exactProofBackedPayload": {
+      "simulation": "SUCCESS",
+      "decision": "ALLOW",
+      "criticalFindingCodes": []
+    }
+  },
+  "guardedSigner": {
+    "mutated": {
+      "simulation": "SUCCESS",
+      "decision": "BLOCK",
+      "signerCalled": false,
+      "signerCallCount": 0
+    },
+    "canonical": {
+      "simulation": "SUCCESS",
+      "decision": "ALLOW",
+      "signerCalled": true,
+      "signerCallCount": 1,
+      "transactionHash": "0x16096b8bd03603994630c04afe09c1c25d2382e30338058c35d2f1333eb3feb7",
+      "blockNumber": "11685110"
+    }
+  },
+  "execution": {
+    "transactionHash": "0x16096b8bd03603994630c04afe09c1c25d2382e30338058c35d2f1333eb3feb7",
+    "blockNumber": "11685110",
+    "explorerTransaction": "https://sepolia.etherscan.io/tx/0x16096b8bd03603994630c04afe09c1c25d2382e30338058c35d2f1333eb3feb7"
+  }
+}

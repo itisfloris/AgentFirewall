@@ -1,0 +1,110 @@
+{
+  "version": "AgentFirewall.LiveAuthorization.v1",
+  "createdAt": "2026-09-11T23:16:52.732Z",
+  "build": {
+    "sourceId": "sha256:fc2d35ebe3830225ade37210ae7dd29b26e3e9618371cc99e94db1af6ee7144b",
+    "sourceKind": "standalone-sha256"
+  },
+  "source": {
+    "network": "sepolia",
+    "chainId": "11155111",
+    "authorizationSource": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "transactionHash": "0xb128ed2d774c524d563d43df63349fd8ea6c39742a36a7f9a24d1d8309dab6aa",
+    "blockNumber": "11685069",
+    "authorizationId": "0x8207ab0bfc3ff5b171ee3b0cae22db4b42ac7019f3b6f0a2ad115cadb7b7d266",
+    "commitment": "0x649bd99b63ec7d63da060d0e1088942e432f588569c23f8ae56f4761301fa35c",
+    "sourceAuthorizationNonce": "2",
+    "transactionIndex": "63"
+  },
+  "execution": {
+    "declaredIntent": {
+      "executionChainId": "11155111",
+      "sender": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "executionNonce": "5",
+      "validUntil": "1789172184",
+      "targetCodeHash": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+      "action": "native_transfer",
+      "target": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "asset": {
+        "kind": "native"
+      },
+      "recipient": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "amountRaw": "1",
+      "method": "native_transfer"
+    },
+    "transaction": {
+      "chain": "sepolia",
+      "from": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "to": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "nonce": "5",
+      "data": "0x",
+      "valueWei": "1"
+    },
+    "mutatedTransaction": {
+      "chain": "sepolia",
+      "from": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "to": "0x1111111111111111111111111111111111111111",
+      "nonce": "5",
+      "data": "0x",
+      "valueWei": "1"
+    }
+  },
+  "creditcoin": {
+    "registryAddress": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "transactionHash": "0x220f64a587451af1c425be74e644366b7784b9c26a7589cbfa412e4e69528062",
+    "blockNumber": "5471872",
+    "sourceChainKey": "1",
+    "sourceBlockNumber": "11685069",
+    "transactionIndex": "63",
+    "transactionKey": "0xdb2a12a44bfd6b5f9d68833d10727ab900fbef60bff6dd84bcd42621c9721c64",
+    "provenTransactionHash": "0x6a449b47ae6330b221f331f301059b42296c019ce66fa252f42c43d440ab0024",
+    "proofPreflightVerified": true
+  },
+  "controllerApproval": {
+    "generatedAt": "2026-09-11T23:24:37.318Z",
+    "controller": "0x4b79bD0B1Be2d9a68E5355e637fb74b84619D2F6",
+    "executor": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+    "signature": "0xe53b7cbf157bbd8bb6f755524cec0c84067054bbf6f2d72520dcf619a8799a4963d547e6cd780e5ed5e66718ef45de5a7c6ad2c01128f3b01a77143f8c17cd8e1c",
+    "message": {
+      "authorizationId": "0x8207ab0bfc3ff5b171ee3b0cae22db4b42ac7019f3b6f0a2ad115cadb7b7d266",
+      "commitment": "0x649bd99b63ec7d63da060d0e1088942e432f588569c23f8ae56f4761301fa35c",
+      "executor": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+      "executionChainId": "11155111",
+      "executionNonce": "5",
+      "validUntil": "1789172184",
+      "registryAddress": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+      "sourceChainKey": "1"
+    }
+  },
+  "verification": {
+    "generatedAt": "2026-09-11T23:24:43.503Z",
+    "mutated": {
+      "simulationOk": true,
+      "decision": "BLOCK",
+      "criticalFindingCodes": [
+        "VERIFIED_ACTUAL_COMMITMENT_MISMATCH",
+        "TARGET_MISMATCH",
+        "RECIPIENT_MISMATCH"
+      ],
+      "signerCallCount": 0
+    },
+    "exact": {
+      "simulationOk": true,
+      "decision": "ALLOW",
+      "criticalFindingCodes": [],
+      "signerCallCount": 1
+    }
+  },
+  "executionResult": {
+    "transactionHash": "0x16096b8bd03603994630c04afe09c1c25d2382e30338058c35d2f1333eb3feb7",
+    "blockNumber": "11685110",
+    "controller": "0x4b79bD0B1Be2d9a68E5355e637fb74b84619D2F6",
+    "executor": "0x82Bb49277DD5d45A194Ea21ab36fcf2aA56B9A18",
+    "signerCallCount": 1,
+    "fee": {
+      "gasLimit": "21000",
+      "maxUnitFeeWei": "1823548382",
+      "worstCaseTotalFeeWei": "38294516022000"
+    }
+  }
+}

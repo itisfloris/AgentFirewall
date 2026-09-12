@@ -1,0 +1,556 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "sourceChainKey",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sourceChainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "authorizationSource",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "authorizationId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "AuthorizationAlreadyRecorded",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "validUntil",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currentTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "AuthorizationExpired",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "emitted",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "recomputed",
+        "type": "bytes32"
+      }
+    ],
+    "name": "AuthorizationIdMismatch",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "emitted",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "recomputed",
+        "type": "bytes32"
+      }
+    ],
+    "name": "EventCommitmentMismatch",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "EventExecutionBindingMismatch",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvalidAuthorizationEventTopics",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidAuthorizationShape",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      }
+    ],
+    "name": "MerklePathTooDeep",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "receiptStatus",
+        "type": "uint256"
+      }
+    ],
+    "name": "SourceTransactionFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "transactionKey",
+        "type": "bytes32"
+      }
+    ],
+    "name": "TransactionAlreadyProcessed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
+    ],
+    "name": "TrustedAuthorizationEventCount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "actionCode",
+        "type": "uint8"
+      }
+    ],
+    "name": "UnsupportedAction",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VerificationFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "expected",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "actual",
+        "type": "uint64"
+      }
+    ],
+    "name": "WrongSourceChain",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "authorizationId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "commitment",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sourceSender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "sourceChainKey",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "sourceBlockNumber",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "transactionIndex",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "validUntil",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "transactionKey",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "provenTransactionHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "VerifiedAuthorizationRecorded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "AUTHORIZATION_COMMITMENT_DOMAIN",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "AUTHORIZATION_ID_DOMAIN",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "AUTHORIZATION_PUBLISHED_TOPIC",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "BLOCK_PROVER",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VERIFIER",
+    "outputs": [
+      {
+        "internalType": "contract IAgentFirewallNativeQueryVerifier",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "chainKey",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "blockHeight",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "transactionIndex",
+        "type": "uint64"
+      }
+    ],
+    "name": "computeTransactionKey",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "authorizationId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getAuthorization",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "commitment",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "sourceChainKey",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "sourceBlockNumber",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "transactionIndex",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "validUntil",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bool",
+        "name": "verified",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "authorizationId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getAuthorizationEvidence",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "commitment",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "sourceChainKey",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "sourceBlockNumber",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "transactionIndex",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "validUntil",
+        "type": "uint64"
+      },
+      {
+        "internalType": "address",
+        "name": "sourceSender",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "transactionKey",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "provenTransactionHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bool",
+        "name": "verified",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "processedTransactions",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "chainKey",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "blockHeight",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes",
+        "name": "encodedTransaction",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "merkleRoot",
+        "type": "bytes32"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "hash",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isLeft",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct IAgentFirewallNativeQueryVerifier.MerkleProofEntry[]",
+        "name": "siblings",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "lowerEndpointDigest",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "continuityRoots",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "submitVerifiedAuthorization",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "authorizationId",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trustedAuthorizationSource",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trustedSourceChainId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trustedSourceChainKey",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

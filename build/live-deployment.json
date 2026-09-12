@@ -1,0 +1,26 @@
+{
+  "version": "AgentFirewall.LiveDeployment.v1",
+  "updatedAt": "2026-09-10T14:02:48.615Z",
+  "source": {
+    "network": "sepolia",
+    "chainId": "11155111",
+    "address": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "runtimeCodeHash": "0xf77b4b45e6984902cf569605457d73cbfb69a0fbcc0e8f6e3d277a07bf9f1af8",
+    "deploymentTx": "0x6088aedf2bdc1ad2936be0d7166b944b7c9a2b54bef20068709b049cb37dc862"
+  },
+  "semanticRegistry": {
+    "network": "creditcoin-testnet",
+    "chainId": "102031",
+    "sourceChainKey": "1",
+    "sourceChainId": "11155111",
+    "trustedAuthorizationSource": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "decoderMode": "inlined",
+    "evmV1Decoder": null,
+    "evmV1DecoderRuntimeCodeHash": null,
+    "decoderDeploymentTx": null,
+    "address": "0x73fC164a9e7e7e3860E509e80B6A6ba838001275",
+    "runtimeCodeHash": "0x6670f9570d7f9c1db934e0b1a167fa676402a8148ec1130036baab81228a81b3",
+    "normalizedRuntimeCodeHash": "0xcc5f52a9f13e6177b12adeb1f77c7ae6b60a190762daf159fc864350e24011da",
+    "deploymentTx": "0xde839b3504f184346d5f38b7b16c6f5f34ba2a3a82f6b5ce4aedecde1e469760"
+  }
+}

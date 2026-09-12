@@ -1,0 +1,9 @@
+PROJECT BASELINE
+
+AgentFirewall development started on September 7, 2026.
+
+The first project snapshot contains the original transaction analyzer, policy checks, RPC inspection, dashboard, SDK guard, and mock-wallet demo.
+
+Subsequent additions include the Attestcoin-backed cross-chain authorization flow, Creditcoin registry integration, controller approval, live E2E verification, MCP integration, and the hardened signer boundary.
+
+The current submission is documented in SUBMISSION.md.

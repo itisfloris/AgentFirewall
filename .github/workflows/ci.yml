@@ -1,0 +1,59 @@
+name: AgentFirewall assurance
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  local-assurance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Clean install
+        run: npm ci
+
+      - name: Application lock / license / install-script audit
+        run: npm run supply-chain:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: TypeScript security and integration tests
+        run: npm test
+
+      - name: Historical live-evidence consistency
+        run: npm run live:evidence:local
+
+      - name: Headless GuardedSigner judge verification
+        run: npm run judge:verify
+
+  solidity-security-artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Clean install
+        run: npm ci
+
+      - name: Validate Solidity source and shipped artifacts
+        run: npm run contracts:security

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+*.log
+
+# Solidity artifacts under build/contracts/ are intentionally tracked for CI/judge verification
+
+# Local configuration / wallet material
+.env.*
+!.env.example
+wallet.json
+*.keystore
+*.keystore.json
+.secrets/

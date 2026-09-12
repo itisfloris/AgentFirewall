@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="AgentFirewall — verified signing boundary for autonomous EVM agents.">
+  <title>AgentFirewall — AI agents propose. Authorization decides.</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --bg:#05070a;--panel:#0c1117;--panel2:#111923;--line:#24303d;
+      --text:#f6f8fb;--muted:#93a2b2;--green:#56e39f;--red:#ff6f7d;
+      --amber:#f2c86b;--blue:#7ca8ff;--cyan:#5de7e7;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -20%,#142031 0,#070a0e 34%,var(--bg) 65%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}main{width:min(1180px,calc(100% - 30px));margin:0 auto 80px}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;color:var(--muted);font-size:13px}.brand{font-weight:900;color:var(--text);letter-spacing:.08em}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#0b0f14}
+    .hero{padding:72px 0 40px;max-width:1020px}.eyebrow{font:700 12px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--cyan);letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(48px,8vw,92px);line-height:.94;letter-spacing:-.06em;margin:18px 0 24px}.lead{max-width:870px;font-size:clamp(18px,2.3vw,26px);line-height:1.45;color:#bdc8d4}.lead strong{color:var(--text)}
+    .thesis{margin-top:28px;padding:15px 18px;border:1px solid #26384a;border-radius:12px;background:linear-gradient(90deg,rgba(124,168,255,.08),rgba(93,231,231,.04));font:700 13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:#d9e5f2}
+    .contrast{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 24px}.contrast-case{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:#0a0f15}.contrast-case span{display:block;font:800 10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.contrast-case strong{display:block;margin-top:7px;font:850 14px/1.45 ui-monospace,monospace}.contrast-case.attack{border-color:rgba(255,111,125,.4)}.contrast-case.attack strong{color:var(--red)}.contrast-case.safe{border-color:rgba(86,227,159,.35)}.contrast-case.safe strong{color:var(--green)}
+    .toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;margin:25px 0 16px}.mode{display:flex;gap:8px}.mode button{border:1px solid var(--line);background:#0c1219;color:var(--muted);border-radius:10px;padding:11px 16px;font-weight:850;cursor:pointer}.mode button.active.safe{border-color:rgba(86,227,159,.65);color:var(--green);background:rgba(86,227,159,.08)}.mode button.active.attack{border-color:rgba(255,111,125,.65);color:var(--red);background:rgba(255,111,125,.08)}
+    .fresh{font:700 11px ui-monospace,monospace;border:1px solid var(--line);border-radius:999px;padding:8px 11px;color:var(--muted)}.fresh.live{color:var(--green);border-color:rgba(86,227,159,.4)}
+    .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.stage{min-height:210px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(180deg,#101720,#0b1016);padding:17px;position:relative;overflow:hidden}.stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:#273441}.stage.ok::after{background:var(--green)}.stage.block::after{background:var(--red)}.stage .num{font:800 11px ui-monospace,monospace;color:var(--blue)}.stage h3{margin:9px 0 8px;font-size:17px}.stage p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.kv{margin-top:14px;display:grid;gap:8px}.kv div{border-top:1px solid #1d2833;padding-top:8px}.kv span{display:block;color:#738496;font:700 9px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em}.kv b{display:block;margin-top:4px;font:650 11px/1.4 ui-monospace,monospace;word-break:break-all}.good{color:var(--green)!important}.bad{color:var(--red)!important}.warn{color:var(--amber)!important}
+    .decision{margin-top:14px;border:1px solid var(--line);border-radius:18px;background:rgba(9,13,18,.94);display:grid;grid-template-columns:1.15fr .85fr;overflow:hidden}.decision-main{padding:30px}.label{color:var(--muted);font:700 10px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em}.verdict{font:950 clamp(54px,8vw,96px)/.95 ui-monospace,monospace;letter-spacing:-.07em;margin:13px 0 7px}.decision.allow .verdict{color:var(--green)}.decision.block .verdict{color:var(--red)}.subverdict{font:800 18px ui-monospace,monospace}.decision.allow .subverdict{color:var(--green)}.decision.block .subverdict{color:var(--red)}.reason{margin-top:18px;color:var(--muted);font-size:14px;line-height:1.55;max-width:690px}
+    .evidence{padding:28px;border-left:1px solid var(--line);background:#080c11}.evidence h3{margin:0 0 15px;font-size:15px}.tx{display:block;padding:10px 0;border-top:1px solid #1b2530}.tx:first-of-type{border-top:0}.tx span{display:block;color:#728395;font:700 9px ui-monospace,monospace;text-transform:uppercase}.tx b{display:block;margin-top:4px;font:600 10px/1.4 ui-monospace,monospace;word-break:break-all}.tx[href]:hover b{color:var(--blue)}
+    .lower{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.card{border:1px solid var(--line);border-radius:15px;background:var(--panel);padding:22px}.card h2{margin:0 0 8px;font-size:20px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}.code{margin-top:16px;background:#070a0e;border:1px solid #202b36;border-radius:10px;padding:14px;font:11px/1.55 ui-monospace,monospace;color:#c4d0dc;white-space:pre-wrap;overflow:auto}.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.pill{border:1px solid #26323e;border-radius:999px;padding:6px 9px;color:#9eacba;font:700 10px ui-monospace,monospace}
+    footer{margin-top:24px;padding:18px 0;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.55;display:flex;justify-content:space-between;gap:20px}
+    @media(max-width:980px){.pipeline{grid-template-columns:1fr 1fr}.stage:last-child{grid-column:1/-1}.decision,.lower{grid-template-columns:1fr}.evidence{border-left:0;border-top:1px solid var(--line)}}@media(max-width:620px){.contrast,.pipeline{grid-template-columns:1fr}.stage:last-child{grid-column:auto}.hero{padding-top:42px}.hero h1{font-size:52px}footer{display:block}}
+  </style>
+</head>
+<body>
+<main>
+  <nav><div class="brand">AGENTFIREWALL</div><div class="tag">testnet evidence viewer</div></nav>
+
+  <section class="hero">
+    <div class="eyebrow">Testnet reference evidence · runtime verifier: npm run judge:verify</div>
+    <h1>AI agents propose.<br>Authorization decides.</h1>
+    <p class="lead">A compromised agent can produce a transaction that the EVM happily executes. <strong>AgentFirewall does not ask only “will it execute?” — it asks whether this exact execution was cryptographically authorized.</strong></p>
+    <div class="thesis">SIMULATION SUCCESS ≠ AUTHORIZATION · BLOCK → signTransaction() is never called</div>
+  </section>
+
+  <section class="contrast" aria-label="Recorded judge contrast">
+    <div class="contrast-case attack"><span>Compromised candidate</span><strong id="attackSummary">SUCCESS → BLOCK → 0 signer calls</strong></div>
+    <div class="contrast-case safe"><span>Authorized candidate</span><strong id="safeSummary">SUCCESS → ALLOW → 1 signer call → mined</strong></div>
+  </section>
+
+  <div class="toolbar">
+    <div class="mode">
+      <button id="attack" class="attack active">Compromised candidate</button>
+      <button id="safe" class="safe">Authorized candidate</button>
+    </div>
+    <div id="fresh" class="fresh">LOADING EVIDENCE…</div>
+  </div>
+
+  <section class="pipeline">
+    <article id="stage-auth" class="stage"><div class="num">01</div><h3>Authorization</h3><p>Sender-authenticated authorization is published on Sepolia.</p><div class="kv"><div><span>Authorization ID</span><b id="authorizationId">—</b></div><div><span>Source tx</span><b id="sourceTx">—</b></div></div></article>
+    <article id="stage-attest" class="stage"><div class="num">02</div><h3>Attestation</h3><p>The recorded Attestcoin proof was verified and semantically recorded on Creditcoin when this testnet evidence was produced.</p><div class="kv"><div><span>Recorded proof preflight</span><b id="proof">—</b></div><div><span>Creditcoin tx</span><b id="creditcoinTx">—</b></div></div></article>
+    <article id="stage-controller" class="stage"><div class="num">03</div><h3>Controller</h3><p>An independent controller approves the execution commitment with EIP‑712.</p><div class="kv"><div><span>Controller</span><b id="controller">—</b></div><div><span>Authority split</span><b id="separated">—</b></div></div></article>
+    <article id="stage-agent" class="stage"><div class="num">04</div><h3>Agent proposal</h3><p>The agent supplies only declared intent and a candidate transaction — never the raw signer.</p><div class="kv"><div><span>Recipient</span><b id="recipient">—</b></div><div><span>Value</span><b id="value">—</b></div></div></article>
+    <article id="stage-signer" class="stage"><div class="num">05</div><h3>Signer gate</h3><p>GuardedSigner reconstructs the canonical envelope and gates the only signing path.</p><div class="kv"><div><span>EVM simulation</span><b id="simulation">—</b></div><div><span>signTransaction()</span><b id="signerCalls">—</b></div></div></article>
+  </section>
+
+  <section id="decision" class="decision block">
+    <div class="decision-main">
+      <div class="label">Guarded execution result</div>
+      <div id="verdict" class="verdict">BLOCK</div>
+      <div id="subverdict" class="subverdict">SIGNER NOT CALLED</div>
+      <div id="reason" class="reason">The candidate may execute on the EVM, but it does not match the proof-backed authorization. GuardedSigner fails closed before signing.</div>
+    </div>
+    <aside class="evidence">
+      <h3>Historical bundled evidence</h3>
+      <a id="sourceLink" class="tx" target="_blank" rel="noreferrer"><span>Sepolia authorization</span><b id="sourceEvidence">—</b></a>
+      <a id="ccLink" class="tx" target="_blank" rel="noreferrer"><span>Creditcoin ingest</span><b id="ccEvidence">—</b></a>
+      <a id="execLink" class="tx" target="_blank" rel="noreferrer"><span>Guarded execution</span><b id="execEvidence">—</b></a>
+      <div class="tx"><span>Evidence generated</span><b id="evidenceGenerated">—</b></div>
+    </aside>
+  </section>
+
+  <section class="lower">
+    <article class="card">
+      <h2>Real agent surface: MCP</h2>
+      <p>The model generates <code>DeclaredIntent</code> and the candidate transaction. The MCP tool surface exposes no raw signer. Runtime verification is separate from stored dashboard evidence.</p>
+      <div class="code">npm run mcp
+
+agentfirewall_check(...)
+agentfirewall_execute(...)
+
+# executor key + controller approval stay inside the process
+# BLOCK => signerCallCount = 0</div>
+      <div class="pillrow"><span class="pill">MCP v2</span><span class="pill">no raw signer tool</span><span class="pill">Sepolia send opt-in</span></div>
+    </article>
+    <article class="card">
+      <h2>What the attack proves</h2>
+      <p>The malicious candidate remains syntactically valid and can simulate successfully. The difference is authorization, not executability.</p>
+      <div id="findingBox" class="code">Loading recorded BLOCK evidence…</div>
+      <div class="pillrow"><span class="pill">testnet cross-chain record</span><span class="pill">nonce + expiry bound</span><span class="pill">runtime code hash bound</span></div>
+    </article>
+  </section>
+
+  <footer><div>AgentFirewall is testnet-only demo infrastructure. RPC trust, proxy coverage and custody limitations remain documented in the threat model.</div><div>Creditcoin BUIDL CTC Fall 2026</div></footer>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const short = value => value ? `${value.slice(0,10)}…${value.slice(-8)}` : "—";
+  let state = null;
+  let selected = "mutated";
+
+  function setLink(id, href) {
+    const el = $(id);
+    if (href) { el.href = href; el.style.pointerEvents = "auto"; }
+    else { el.removeAttribute("href"); el.style.pointerEvents = "none"; }
+  }
+
+  function renderScenario() {
+    if (!state) return;
+    const attack = selected === "mutated";
+    const scenario = attack ? state.scenarios.mutated : state.scenarios.canonical;
+    const candidate = attack ? state.agent.mutatedCandidate : state.agent.canonicalCandidate;
+    const decision = scenario.decision || "UNKNOWN";
+    const signerCount = scenario.signerCallCount;
+
+    $("safe").classList.toggle("active", !attack);
+    $("attack").classList.toggle("active", attack);
+    $("recipient").textContent = candidate?.to || "—";
+    $("value").textContent = `${candidate?.valueWei ?? "0"} wei`;
+    $("simulation").textContent = scenario.simulation || "—";
+    $("simulation").className = scenario.simulation === "SUCCESS" ? "good" : "warn";
+
+    if (signerCount === 0) {
+      $("signerCalls").textContent = "NOT CALLED · 0 calls";
+      $("signerCalls").className = "bad";
+    } else if (signerCount === 1) {
+      $("signerCalls").textContent = "CALLED ONCE · 1 call";
+      $("signerCalls").className = "good";
+    } else {
+      $("signerCalls").textContent = "NOT RECORDED IN THIS EVIDENCE";
+      $("signerCalls").className = "warn";
+    }
+
+    const panel = $("decision");
+    panel.className = `decision ${decision === "ALLOW" ? "allow" : "block"}`;
+    $("verdict").textContent = decision;
+
+    if (attack) {
+      $("subverdict").textContent = signerCount === 0 ? "SIGNER NOT CALLED" : "SIGNER GATE EVIDENCE NOT RECORDED";
+      $("reason").textContent = "The candidate still simulates successfully, but it no longer matches the proof-backed authorization commitment. GuardedSigner fails closed before signing.";
+      $("stage-agent").className = "stage block";
+      $("stage-signer").className = "stage block";
+      $("findingBox").textContent = (scenario.criticalFindingCodes || []).length
+        ? scenario.criticalFindingCodes.join("\n")
+        : "Recorded mutation was blocked; finding codes unavailable.";
+    } else {
+      $("subverdict").textContent = signerCount === 1 ? "SIGNER CALLED ONCE" : "AUTHORIZED PREFLIGHT RECORDED";
+      $("reason").textContent = "Recorded testnet authorization, controller approval, declared intent and canonical execution agree. Current execution still remains subject to local deny policy and fresh runtime checks.";
+      $("stage-agent").className = "stage ok";
+      $("stage-signer").className = decision === "ALLOW" ? "stage ok" : "stage";
+      $("findingBox").textContent = state.scenarios.canonical.transactionHash
+        ? `Mined guarded transaction\n${state.scenarios.canonical.transactionHash}\nblock ${state.scenarios.canonical.blockNumber}`
+        : "Historical canonical preflight was ALLOW; no guarded broadcast is recorded in this artifact.";
+    }
+  }
+
+  async function load() {
+    try {
+      const response = await fetch("/api/judge-demo");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      state = await response.json();
+
+      $("fresh").textContent = state.historicalArtifactConsistent ? "TESTNET ARTIFACT CONSISTENT" : "TESTNET EVIDENCE INCOMPLETE OR MISMATCHED";
+      $("fresh").className = state.historicalArtifactConsistent ? "fresh live" : "fresh";
+      $("authorizationId").textContent = short(state.authorization.authorizationId);
+      $("sourceTx").textContent = short(state.authorization.sourceTransactionHash);
+      $("proof").textContent = state.attestation.proofPreflightVerified ? "RECORDED VERIFIED" : "NOT RECORDED VERIFIED";
+      $("proof").className = state.attestation.proofPreflightVerified ? "good" : "bad";
+      $("creditcoinTx").textContent = short(state.attestation.creditcoinTransactionHash);
+      $("controller").textContent = state.controller.address ? short(state.controller.address) : "NOT RECORDED";
+      $("separated").textContent = state.controller.separated ? "CONTROLLER ≠ EXECUTOR" : "NOT RECORDED";
+      $("separated").className = state.controller.separated ? "good" : "warn";
+      $("sourceEvidence").textContent = state.authorization.sourceTransactionHash;
+      $("ccEvidence").textContent = state.attestation.creditcoinTransactionHash;
+      $("execEvidence").textContent = state.scenarios.canonical.transactionHash || "not recorded for current guarded flow";
+      $("evidenceGenerated").textContent = state.generatedAt || "—";
+      setLink("sourceLink", state.authorization.sourceExplorer);
+      setLink("ccLink", state.attestation.explorer);
+      setLink("execLink", state.scenarios.canonical.explorer);
+
+      $("attackSummary").textContent = `${state.scenarios.mutated.simulation} → ${state.scenarios.mutated.decision} → ${state.scenarios.mutated.signerCallCount} signer calls`;
+      $("safeSummary").textContent = `${state.scenarios.canonical.simulation} → ${state.scenarios.canonical.decision} → ${state.scenarios.canonical.signerCallCount} signer call → mined`;
+
+      ["stage-auth","stage-attest"].forEach(id => $(id).className = "stage ok");
+      $("stage-controller").className = state.controller.separated ? "stage ok" : "stage";
+      renderScenario();
+    } catch (error) {
+      $("fresh").textContent = "EVIDENCE API UNAVAILABLE";
+      $("findingBox").textContent = String(error);
+    }
+  }
+
+  $("safe").onclick = () => { selected = "canonical"; renderScenario(); };
+  $("attack").onclick = () => { selected = "mutated"; renderScenario(); };
+  load();
+</script>
+</body>
+</html>

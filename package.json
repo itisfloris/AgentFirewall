@@ -1,0 +1,62 @@
+{
+  "name": "agentfirewall",
+  "version": "1.0.0-rc.6",
+  "description": "Security boundary for autonomous EVM agents: Attestcoin-verified authorization, declared intent, canonical execution checks, and a guarded signer boundary.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itisfloris/AgentFirewall.git"
+  },
+  "homepage": "https://github.com/itisfloris/AgentFirewall#readme",
+  "scripts": {
+    "test": "tsx --test src/*.test.ts",
+    "test:guarded": "tsx --test src/guarded-signer.test.ts",
+    "dev": "tsx src/server.ts",
+    "judge:verify": "node scripts/judge-verify.mjs",
+    "typecheck": "tsc --noEmit",
+    "inspect": "tsx src/test-chain.ts",
+    "attestcoin:verify-proof": "tsx src/attestcoin-proof.ts",
+    "contracts:compile": "tsx src/compile-contracts.ts",
+    "b3:deploy": "tsx src/deploy-live-stack.ts",
+    "demo:submission": "tsx src/demo-submission.ts",
+    "submission:doctor": "tsx src/submission-doctor.ts",
+    "attestcoin:ingest-authorization": "tsx src/attestcoin-semantic.ts",
+    "attestcoin:publish-demo-authorization": "tsx src/publish-demo-authorization.ts",
+    "demo:verified-live": "tsx src/demo-verified-live.ts",
+    "live:evidence": "tsx src/verify-live-evidence.ts",
+    "live:evidence:local": "tsx src/verify-live-evidence-local.ts",
+    "validate:local": "npm run supply-chain:check && npm run contracts:security && npm run typecheck && npm test && npm run live:evidence:local",
+    "supply-chain:check": "node scripts/check-supply-chain.mjs",
+    "ci:local": "npm run validate:local",
+    "controller:approve-live": "tsx src/sign-controller-approval.ts",
+    "live:e2e": "tsx src/live-e2e.ts",
+    "mcp": "tsx src/mcp-server.ts",
+    "contracts:security": "node scripts/check-solidity-security.mjs",
+    "prepublishOnly": "node -e \"throw new Error('AgentFirewall is a repository/application, not an npm package.')\""
+  },
+  "keywords": [
+    "ai-agents",
+    "blockchain-security",
+    "attestcoin",
+    "creditcoin",
+    "ethereum",
+    "pre-signing"
+  ],
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "ethers": "6.17.0",
+    "express": "5.2.1",
+    "zod": "4.5.4",
+    "@modelcontextprotocol/server": "2.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.5.0",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}
